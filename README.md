@@ -96,6 +96,11 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 11. Una vez el cambio se vea reflejado, repita el paso 7, 8 y 9.
 12. Evalue el escenario de calidad asociado al requerimiento no funcional de escalabilidad y concluya si usando este modelo de escalabilidad logramos cumplirlo.
+    
+     Al aumentar el tamaño y realizar las mismas peticiones el porcentaje de consumo de CPU disminuyó pero el tiempo de respuesta se mantuvo constante, por lo que se puede inferir la estrategia de escalamiento vertical implementada no cumple el objetivo, esto puede ser porque el programa no aprovecha los recusos de CPU de la maquina virtual.
+    
+     ![Imágen](images/cpu2.png)
+     
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
 
 **Preguntas**
