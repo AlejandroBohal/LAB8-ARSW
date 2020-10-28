@@ -3,6 +3,11 @@
 
 ## Escalamiento en Azure con Maquinas Virtuales, Sacale Sets y Service Plans
 
+## Integrantes
+
+* Angi Paola Jimenez Pira
+* Sergio Alejandro Bohorquez Alzate
+
 ### Dependencias
 * Cree una cuenta gratuita dentro de Azure. Para hacerlo puede guiarse de esta [documentación](https://azure.microsoft.com/en-us/free/search/?&ef_id=Cj0KCQiA2ITuBRDkARIsAMK9Q7MuvuTqIfK15LWfaM7bLL_QsBbC5XhJJezUbcfx-qAnfPjH568chTMaAkAsEALw_wcB:G:s&OCID=AID2000068_SEM_alOkB9ZE&MarinID=alOkB9ZE_368060503322_%2Bazure_b_c__79187603991_kwd-23159435208&lnkd=Google_Azure_Brand&dclid=CjgKEAiA2ITuBRDchty8lqPlzS4SJAC3x4k1mAxU7XNhWdOSESfffUnMNjLWcAIuikQnj3C4U8xRG_D_BwE). Al hacerlo usted contará con $200 USD para gastar durante 1 mes.
 
@@ -49,16 +54,26 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 ![](images/part1/part1-vm-3000InboudRule.png)
 
 7. La función que calcula en enésimo número de la secuencia de Fibonacci está muy mal construido y consume bastante CPU para obtener la respuesta. Usando la consola del Browser documente los tiempos de respuesta para dicho endpoint usando los siguintes valores:
-    * 1000000
-    * 1010000
-    * 1020000
-    * 1030000
-    * 1040000
-    * 1050000
-    * 1060000
-    * 1070000
-    * 1080000
-    * 1090000    
+    * 1000000:
+        ![Imágen](images/1000000.png)
+    * 1010000:
+        ![Imágen](images/1010000.png)
+    * 1020000:
+        ![Imágen](images/1020000.png)
+    * 1030000:
+        ![Imágen](images/1030000.png)
+    * 1040000:
+        ![Imágen](images/1040000.png)
+    * 1050000:
+        ![Imágen](images/1050000.png)
+    * 1060000:
+        ![Imágen](images/1060000.png)
+    * 1070000:
+        ![Imágen](images/1070000.png)
+    * 1080000:
+        ![Imágen](images/1080000.png)
+    * 1090000:
+        ![Imágen](images/1090000.png)
 
 8. Dírijase ahora a Azure y verifique el consumo de CPU para la VM. (Los resultados pueden tardar 5 minutos en aparecer).
 
