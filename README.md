@@ -99,7 +99,6 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     
      Al aumentar el tamaño y realizar las mismas peticiones el porcentaje de consumo de CPU disminuyó pero el tiempo de respuesta se mantuvo constante, por lo que se puede inferir la estrategia de escalamiento vertical implementada no cumple el objetivo, esto puede ser porque el programa no aprovecha los recusos de CPU de la maquina virtual.
     
-     ![Imágen](images/cpu2.png)
      
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
 
@@ -130,11 +129,68 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     - **Disk** Almacenamiento de la máquina virtual Azure.
     
 3. ¿Al cerrar la conexión ssh con la VM, por qué se cae la aplicación que ejecutamos con el comando `npm FibonacciApp.js`? ¿Por qué debemos crear un *Inbound port rule* antes de acceder al servicio?
+
+Cuando nos conectamos a la máquina virtual mediante SSH, se inicia un proceso para este servicio y todos los comandos ejecutados a partir de ahi crearán hijos de dicho proceso, que terminarán en cuanto se finalice la conexión mediante SSH.
+
+Se debe crear una regla de entrada en el puerto 3000 para exponer el servicio de FibonacciApp en internet y permitir el acceso externo esta regla puede ser TCP/UDP.
+
 4. Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.
+
+    Tiempo -- `B1ls`
+
+    |    N     | Fibonacci(N)|
+    |:--------:|:-----------:|
+    |1000000   |    20.68s   |
+    |1010000   |    21.38s   |
+    |1020000   |    21.39s   |
+    |1030000   |    22.13s   |
+    |1040000   |    22.40s   |
+    |1050000   |    22.91s   |
+    |1060000   |    23.71s   |
+    |1070000   |    24.12s   |
+    |1080000   |    24.44s   |
+    |1090000   |    24.84s   |
+
+
+    Tiempo --  `B2ms`
+
+    |    N     | Fibonacci(N)|
+    |:--------:|:-----------:|
+    |1000000   |    20.03s   |
+    |1010000   |    21.00s   |
+    |1020000   |    20.95s   |
+    |1030000   |    21.17s   |
+    |1040000   |    22.02s   |
+    |1050000   |    22.16s   |
+    |1060000   |    22.61s   |
+    |1070000   |    23.12s   |
+    |1080000   |    23.36s   |
+    |1090000   |    24.04s   |
+
+La implementación de la función de Fibonacci no aprovecha bien los recursos del sistema al estar implementada iterativamente y no usar más hilos, se repiten cálculos para hallar el resultado de cada iteración que podrían ser almacenados en memoria.
+
 5. Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.
+
+   ![Imágen](images/cpu2.png)
+   
+   Cada petición consume gran parte de recursos de la cpu debido a que se realizan múltiples iteraciones en las que se realizan cálculos innecesarios, además no se implementa      concurrencia lo que hace que se consuman más recursos y el tiempo de respuesta sea extenso.   
+   
 6. Adjunte la imagen del resumen de la ejecución de Postman. Interprete:
-    * Tiempos de ejecución de cada petición.
-    * Si hubo fallos documentelos y explique.
+
+   **Resumen B1ls**
+
+   ![Resumen1](https://media.discordapp.net/attachments/352624122301513730/771856821605761071/unknown.png)
+   
+   El tiempo promedio de ejecución para cada petición fue de 27.4s y se recibió un total de 1.2MB
+   
+   Al realizar las peticiones concurrentes se evidenciaron 4 fallos en la conexión debido a que el servidor no soporta concurrencia.
+   
+   ![Resumen2](https://media.discordapp.net/attachments/352624122301513730/771088449821868032/unknown.png)
+   
+   El tiempo promedio de ejecución para cada petición fue de 28.3s y se recibió un total de 1MB
+   
+   Al realizar las peticiones concurrentes se evidenciaron 5 fallos en la conexión debido a que el servidor no soporta concurrencia.
+   
 7. ¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?
 8. ¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?
 9. ¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?
