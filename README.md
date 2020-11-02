@@ -412,9 +412,13 @@ Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar 
 * **Presente el Diagrama de Despliegue de la solución.**
     ![Despliegue](https://media.discordapp.net/attachments/352624122301513730/772882775346380800/Deployment_Diagram0_1.png?width=686&height=475)
 
-    
-    
+## Referencias
 
+* !(https://docs.microsoft.com/en-us/azure/load-balancer/skus)
+* !(https://azure.microsoft.com/en-us/pricing/calculator/)
+* !(https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview)
+* !(https://azure.microsoft.com/en-us/blog/azure-load-balancer-new-distribution-mode/)
+* !(https://docs.microsoft.com/en-us/azure/virtual-network/network-security-groups overview#:~:text=You%20can%20use%20an%20Azure,several%20types%20of%20Azure%20resources.)
 
 
 
