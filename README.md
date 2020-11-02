@@ -307,7 +307,15 @@ Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar 
          | Horizontal   | Norte de Europa | Linux Ubuntu 18.04 | Estándar | B1ls      | 4              | 730       | 26.6                | 16.69          | 10                  |
          
          *(Costo calculado con Azure Calculator)*
-   
+      
+      **Conclusiones**
+
+      * El costo total de la infraestructura de escalamiento vertical es de 66.48 dolares mensuales suponiendo una disponibilidad de 730 horas, el costo de la arquitectura de escalamiento horizontal es de 39.94 dolares (16.69 por las máquinas virtuales y 23.25 por el balanceador de carga estándar) con la misma disponibilidad en horas de la infraestructura vertical.
+
+      * La diferencia de tiempo de respuesta no es muy significativa.
+
+      * Podemos observar que la infraestructura de la escalabilidad vertical no responde todas las peticiones exitosamente a diferencia de la de escalabilidad horizontal, esto se debe a que las replicas de los nodos permiten realizar peticiones concurrentes a diferencia de utilizar una sola máquina para computar todas las peticiones.
+
 3. Agregue una 4 maquina virtual y realice las pruebas de newman, pero esta vez no lance 2 peticiones en paralelo, sino que incrementelo a 4. Haga un informe donde presente el comportamiento de la CPU de las 4 VM y explique porque la tasa de éxito de las peticiones aumento con este estilo de escalabilidad.
 
     ```
