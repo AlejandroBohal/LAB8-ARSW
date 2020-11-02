@@ -192,6 +192,17 @@ La implementación de la función de Fibonacci no aprovecha bien los recursos de
    Al realizar las peticiones concurrentes se evidenciaron 5 fallos en la conexión debido a que el servidor no soporta concurrencia.
    
 7. ¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?
+
+La máquina B1ls tiene menos capacidad que la máquina B2ms, es mucho más económica que la B2ms y solo está disponible para linux a diferencia de la B2ms.
+
+| Name | vCpu (núcleos) | Ram | Discos de datos | E/S máxima por segundo | Almacenamiento temporal (GiB) | Costo/Mes ($) |
+|------|----------------|-----|-----------------|------------------------|-------------------------------|---------------|
+| B2ms | 2              | 8   | 4               | 1920                   | 16                            | 72.85         |
+| B1ls | 1              | 0.5 | 2               | 160                    | 4                             | 4.56          |
+
+Ambas máquinas son de uso general, y proporcionan un uso equilibrado de la CPU, son utilizadas para entornos de desarrollo y pruebas, por lo general el tráfico soportado
+por estas es bajo/medio.
+
 8. ¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?
 9. ¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?
 10. ¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?
