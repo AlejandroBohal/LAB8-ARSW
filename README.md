@@ -301,6 +301,10 @@ Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar 
          
       * Tabla Comparativa Escalabilidad (Horizontal vs Vertical)
          
+         | Escalamiento | Region          | SO                 | Nivel    | Instancia | Cantidad de vm | Horas (h) | Tiempo promedio (s) | Costo /Mes ($) | Peticiones éxitosas |
+|--------------|-----------------|--------------------|----------|-----------|----------------|-----------|---------------------|----------------|---------------------|
+| Vertical     | EEUU            | Linux Ubuntu 18.04 | Estándar | B2ms      | 1              | 730       | 25.3                | 66.48          | 6                   |
+| Horizontal   | Norte de Europa | Linux Ubuntu 18.04 | Estándar | B1ls      | 4              | 730       | 26.6                | 16.69          | 10                  |
          *(Costo calculado con Azure Calculator)*
    
 3. Agregue una 4 maquina virtual y realice las pruebas de newman, pero esta vez no lance 2 peticiones en paralelo, sino que incrementelo a 4. Haga un informe donde presente el comportamiento de la CPU de las 4 VM y explique porque la tasa de éxito de las peticiones aumento con este estilo de escalabilidad.
