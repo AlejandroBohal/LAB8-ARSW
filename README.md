@@ -193,10 +193,17 @@ por estas es bajo/medio.
 
 9. ¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?
 
-    Es necesario reiniciar la máquina, por lo tanto la infraestructura no estará disponible durante algunos minutos, lo cual implica que todas las peticiones entrantes durante estos minutos serán ignoradas. Si el sistema consultado frecuentemente podría significar una perdida ya sea económica o de integridad de algunas transacciones realizadas por los clientes.    
+    Es necesario reiniciar la máquina, por lo tanto la infraestructura no estará disponible durante algunos minutos, lo cual implica que todas las peticiones entrantes durante estos minutos serán ignoradas. Si el sistema es consultado frecuentemente podría significar una perdida ya sea económica o de integridad de algunas transacciones realizadas por los clientes.    
 
 10. ¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?
+
+    Si hubo mejora en el uso de cpu ya que el consumo fue del 13% en promedio comparado con el de la otra máquina que fue del 30%, esto se debe a que se disponen de más recursos para hacer los cálculos, sin embargo el tiempo de respuesta no mejoró considerablemente esto se debe a la implementación propia del programa.
+
 11. Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?
+    
+    ![](/images/tabla3.png)
+    
+    El comportamiento del sistema no mejoró, el porcentaje de peticiones que fallan sigue siendo el 40%. El tiempo de respuesta no mejora significativamente, esto puede deberse a que el tamaño B2ms no mejora mucho los cores de cpu con respecto al tamaño B1ls.
 
 ### Parte 2 - Escalabilidad horizontal
 
