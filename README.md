@@ -16,6 +16,7 @@
 Adjunto a este laboratorio usted podrá encontrar una aplicación totalmente desarrollada que tiene como objetivo calcular el enésimo valor de la secuencia de Fibonnaci.
 
 **Escalabilidad**
+
 Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000) de la secuencia de Fibonacci de forma concurrente y el sistema se encuentra bajo condiciones normales de operación, todas las peticiones deben ser respondidas y el consumo de CPU del sistema no puede superar el 70%.
 
 ### Parte 1 - Escalabilidad vertical
@@ -28,7 +29,7 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     * Username = scalability_lab
     * SSH publi key = Su llave ssh publica
 
-![Imágen 1](images/part1/part1-vm-basic-config.png)
+    ![Imágen 1](images/part1/part1-vm-basic-config.png)
 
 2. Para conectarse a la VM use el siguiente comando, donde las `x` las debe remplazar por la IP de su propia VM.
 
@@ -51,7 +52,7 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 6. Antes de verificar si el endpoint funciona, en Azure vaya a la sección de *Networking* y cree una *Inbound port rule* tal como se muestra en la imágen. Para verificar que la aplicación funciona, use un browser y user el endpoint `http://xxx.xxx.xxx.xxx:3000/fibonacci/6`. La respuesta debe ser `The answer is 8`.
 
-![](images/part1/part1-vm-3000InboudRule.png)
+    ![](images/part1/part1-vm-3000InboudRule.png)
 
 7. La función que calcula en enésimo número de la secuencia de Fibonacci está muy mal construido y consume bastante CPU para obtener la respuesta. Usando la consola del Browser documente los tiempos de respuesta para dicho endpoint usando los siguintes valores:
     * 1000000:
@@ -77,7 +78,7 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 8. Dírijase ahora a Azure y verifique el consumo de CPU para la VM. (Los resultados pueden tardar 5 minutos en aparecer).
 
-![Imágen 2](images/part1/part1-vm-cpu.png)
+    ![Imágen 2](images/part1/part1-vm-cpu.png)
 
 9. Ahora usaremos Postman para simular una carga concurrente a nuestro sistema. Siga estos pasos.
     * Instale newman con el comando `npm install newman -g`. Para conocer más de Newman consulte el siguiente [enlace](https://learning.getpostman.com/docs/postman/collection-runs/command-line-integration-with-newman/).
@@ -92,13 +93,12 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
 
 10. La cantidad de CPU consumida es bastante grande y un conjunto considerable de peticiones concurrentes pueden hacer fallar nuestro servicio. Para solucionarlo usaremos una estrategia de Escalamiento Vertical. En Azure diríjase a la sección *size* y a continuación seleccione el tamaño `B2ms`.
 
-![Imágen 3](images/part1/part1-vm-resize.png)
+    ![Imágen 3](images/part1/part1-vm-resize.png)
 
 11. Una vez el cambio se vea reflejado, repita el paso 7, 8 y 9.
 12. Evalue el escenario de calidad asociado al requerimiento no funcional de escalabilidad y concluya si usando este modelo de escalabilidad logramos cumplirlo.
     
      Al aumentar el tamaño y realizar las mismas peticiones el porcentaje de consumo de CPU disminuyó pero el tiempo de respuesta se mantuvo constante, por lo que se puede inferir la estrategia de escalamiento vertical implementada no cumple el objetivo, esto puede ser porque el programa no aprovecha los recusos de CPU de la maquina virtual.
-    
      
 13. Vuelva a dejar la VM en el tamaño inicial para evitar cobros adicionales.
 
@@ -130,44 +130,26 @@ Cuando un conjunto de usuarios consulta un enésimo número (superior a 1000000)
     
 3. ¿Al cerrar la conexión ssh con la VM, por qué se cae la aplicación que ejecutamos con el comando `npm FibonacciApp.js`? ¿Por qué debemos crear un *Inbound port rule* antes de acceder al servicio?
 
-Cuando nos conectamos a la máquina virtual mediante SSH, se inicia un proceso para este servicio y todos los comandos ejecutados a partir de ahi crearán hijos de dicho proceso, que terminarán en cuanto se finalice la conexión mediante SSH.
+    Cuando nos conectamos a la máquina virtual mediante SSH, se inicia un proceso para este servicio y todos los comandos ejecutados a partir de ahi crearán hijos de dicho proceso, que terminarán en cuanto se finalice la conexión mediante SSH.
 
-Se debe crear una regla de entrada en el puerto 3000 para exponer el servicio de FibonacciApp en internet y permitir el acceso externo esta regla puede ser TCP/UDP.
+    Se debe crear una regla de entrada en el puerto 3000 para exponer el servicio de FibonacciApp en internet y permitir el acceso externo esta regla puede ser TCP/UDP.
 
 4. Adjunte tabla de tiempos e interprete por qué la función tarda tando tiempo.
+    
+    | N       | B1ls(s) | B2ms(s) |
+    |---------|---------|---------|
+    | 1000000 | 20.68   | 20.03   |
+    | 1010000 | 21.38   | 21.00   |
+    | 1020000 | 21.39   | 20.95   |
+    | 1030000 | 22.13   | 21.17   |
+    | 1040000 | 22.40   | 22.02   |
+    | 1050000 | 22.91   | 22.16   |
+    | 1060000 | 23.71   | 22.61   |
+    | 1070000 | 24.12   | 23.12   |
+    | 1080000 | 24.44   | 23.36   |
+    | 1090000 | 24.84   | 24.04   |
 
-    Tiempo -- `B1ls`
-
-    |    N     | Fibonacci(N)|
-    |:--------:|:-----------:|
-    |1000000   |    20.68s   |
-    |1010000   |    21.38s   |
-    |1020000   |    21.39s   |
-    |1030000   |    22.13s   |
-    |1040000   |    22.40s   |
-    |1050000   |    22.91s   |
-    |1060000   |    23.71s   |
-    |1070000   |    24.12s   |
-    |1080000   |    24.44s   |
-    |1090000   |    24.84s   |
-
-
-    Tiempo --  `B2ms`
-
-    |    N     | Fibonacci(N)|
-    |:--------:|:-----------:|
-    |1000000   |    20.03s   |
-    |1010000   |    21.00s   |
-    |1020000   |    20.95s   |
-    |1030000   |    21.17s   |
-    |1040000   |    22.02s   |
-    |1050000   |    22.16s   |
-    |1060000   |    22.61s   |
-    |1070000   |    23.12s   |
-    |1080000   |    23.36s   |
-    |1090000   |    24.04s   |
-
-La implementación de la función de Fibonacci no aprovecha bien los recursos del sistema al estar implementada iterativamente y no usar más hilos, se repiten cálculos para hallar el resultado de cada iteración que podrían ser almacenados en memoria.
+    La implementación de la función de Fibonacci no aprovecha bien los recursos del sistema al estar implementada iterativamente y no usar más hilos, se repiten cálculos para hallar el resultado de cada iteración que podrían ser almacenados en memoria.
 
 5. Adjunte imágen del consumo de CPU de la VM e interprete por qué la función consume esa cantidad de CPU.
 
@@ -193,23 +175,26 @@ La implementación de la función de Fibonacci no aprovecha bien los recursos de
    
 7. ¿Cuál es la diferencia entre los tamaños `B2ms` y `B1ls` (no solo busque especificaciones de infraestructura)?
 
-La máquina B1ls tiene menos capacidad que la máquina B2ms, es mucho más económica que la B2ms y solo está disponible para linux a diferencia de la B2ms.
+    La máquina B1ls tiene menos capacidad que la máquina B2ms, es mucho más económica que la B2ms y solo está disponible para linux a diferencia de la B2ms.
 
-| Name | vCpu (núcleos) | Ram | Discos de datos | E/S máxima por segundo | Almacenamiento temporal (GiB) | Costo/Mes ($) |
-|------|----------------|-----|-----------------|------------------------|-------------------------------|---------------|
-| B2ms | 2              | 8   | 4               | 1920                   | 16                            | 72.85         |
-| B1ls | 1              | 0.5 | 2               | 160                    | 4                             | 4.56          |
+    | Name | vCpu (núcleos) | Ram | Discos de datos | E/S máxima por segundo | Almacenamiento temporal (GiB) | Costo/Mes ($) |
+    |------|----------------|-----|-----------------|------------------------|-------------------------------|---------------|
+    | B2ms | 2              | 8   | 4               | 1920                   | 16                            | 72.85         |
+    | B1ls | 1              | 0.5 | 2               | 160                    | 4                             | 4.56          |
 
-Ambas máquinas son de uso general, y proporcionan un uso equilibrado de la CPU, son utilizadas para entornos de desarrollo y pruebas, por lo general el tráfico soportado
+    Ambas máquinas son de uso general, y proporcionan un uso equilibrado de la CPU, son utilizadas para entornos de desarrollo y pruebas, por lo general el tráfico soportado
 por estas es bajo/medio.
 
 8. ¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?
 
    Aumentar el tamaño de la máquina puede significar un consumo menor de recursos de cpu, sin embargo, no se observa mejora en los tiempos de respuesta de las peticiones ni en la capacidad de respuesta concurrente del sistema (algunas peticiones aún fallan). Si se desea mejorar los tiempos de respuesta se debe realizar una mejor implementación de la aplicación FibonacciApp.
 
-Cuando cambiamos el tamaño de la máquina virtual es necesario reiniciarla, por lo tanto se pierde disponibilidad de la aplicación FibonacciApp ya que esta deja de funcionar mientras se reinicia.
+    Cuando cambiamos el tamaño de la máquina virtual es necesario reiniciarla, por lo tanto se pierde disponibilidad de la aplicación FibonacciApp ya que esta deja de funcionar mientras se reinicia.
 
 9. ¿Qué pasa con la infraestructura cuando cambia el tamaño de la VM? ¿Qué efectos negativos implica?
+
+    Es necesario reiniciar la máquina, por lo tanto la infraestructura no estará disponible durante algunos minutos, lo cual implica que todas las peticiones entrantes durante estos minutos serán ignoradas. Si el sistema consultado frecuentemente podría significar una perdida ya sea económica o de integridad de algunas transacciones realizadas por los clientes.    
+
 10. ¿Hubo mejora en el consumo de CPU o en los tiempos de respuesta? Si/No ¿Por qué?
 11. Aumente la cantidad de ejecuciones paralelas del comando de postman a `4`. ¿El comportamiento del sistema es porcentualmente mejor?
 
@@ -221,23 +206,23 @@ Antes de continuar puede eliminar el grupo de recursos anterior para evitar gast
 
 1. El Balanceador de Carga es un recurso fundamental para habilitar la escalabilidad horizontal de nuestro sistema, por eso en este paso cree un balanceador de carga dentro de Azure tal cual como se muestra en la imágen adjunta.
 
-![](images/part2/part2-lb-create.png)
+    ![](images/part2/part2-lb-create.png)
 
 2. A continuación cree un *Backend Pool*, guiese con la siguiente imágen.
 
-![](images/part2/part2-lb-bp-create.png)
+    ![](images/part2/part2-lb-bp-create.png)
 
 3. A continuación cree un *Health Probe*, guiese con la siguiente imágen.
 
-![](images/part2/part2-lb-hp-create.png)
+    ![](images/part2/part2-lb-hp-create.png)
 
 4. A continuación cree un *Load Balancing Rule*, guiese con la siguiente imágen.
 
-![](images/part2/part2-lb-lbr-create.png)
+    ![](images/part2/part2-lb-lbr-create.png)
 
 5. Cree una *Virtual Network* dentro del grupo de recursos, guiese con la siguiente imágen.
 
-![](images/part2/part2-vn-create.png)
+    ![](images/part2/part2-vn-create.png)
 
 #### Crear las maquinas virtuales (Nodos)
 
@@ -245,75 +230,84 @@ Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar 
 
 1. En la configuración básica de la VM guíese por la siguiente imágen. Es importante que se fije en la "Avaiability Zone", donde la VM1 será 1, la VM2 será 2 y la VM3 será 3.
 
-![](images/part2/part2-vm-create1.png)
+    ![](images/part2/part2-vm-create1.png)
 
 2. En la configuración de networking, verifique que se ha seleccionado la *Virtual Network*  y la *Subnet* creadas anteriormente. Adicionalmente asigne una IP pública y no olvide habilitar la redundancia de zona.
 
-![](images/part2/part2-vm-create2.png)
+    ![](images/part2/part2-vm-create2.png)
 
 3. Para el Network Security Group seleccione "avanzado" y realice la siguiente configuración. No olvide crear un *Inbound Rule*, en el cual habilite el tráfico por el puerto 3000. Cuando cree la VM2 y la VM3, no necesita volver a crear el *Network Security Group*, sino que puede seleccionar el anteriormente creado.
 
-![](images/part2/part2-vm-create3.png)
+    ![](images/part2/part2-vm-create3.png)
 
 4. Ahora asignaremos esta VM a nuestro balanceador de carga, para ello siga la configuración de la siguiente imágen.
 
-![](images/part2/part2-vm-create4.png)
+    ![](images/part2/part2-vm-create4.png)
 
 5. Finalmente debemos instalar la aplicación de Fibonacci en la VM. para ello puede ejecutar el conjunto de los siguientes comandos, cambiando el nombre de la VM por el correcto
 
-```
-git clone https://github.com/daprieto1/ARSW_LOAD-BALANCING_AZURE.git
+    ```
+    git clone https://github.com/daprieto1/ARSW_LOAD-BALANCING_AZURE.git
 
-curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
-source /home/vm1/.bashrc
-nvm install node
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+    source /home/vm1/.bashrc
+    nvm install node
 
-cd ARSW_LOAD-BALANCING_AZURE/FibonacciApp
-npm install
+    cd ARSW_LOAD-BALANCING_AZURE/FibonacciApp
+    npm install
 
-npm install forever -g
-forever start FibonacciApp.js
-```
+    npm install forever -g
+    forever start FibonacciApp.js
+    ```
 
-Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, sin embargo es importante que usted sepa que existen herramientas para aumatizar este proceso, entre ellas encontramos Azure Resource Manager, OsDisk Images, Terraform con Vagrant y Paker, Puppet, Ansible entre otras.
+    Realice este proceso para las 3 VMs, por ahora lo haremos a mano una por una, sin embargo es importante que usted sepa que existen herramientas para aumatizar este proceso, entre ellas encontramos Azure Resource Manager, OsDisk Images, Terraform con Vagrant y Paker, Puppet, Ansible entre otras.
 
 #### Probar el resultado final de nuestra infraestructura
 
 1. Porsupuesto el endpoint de acceso a nuestro sistema será la IP pública del balanceador de carga, primero verifiquemos que los servicios básicos están funcionando, consuma los siguientes recursos:
 
-```
-http://52.155.223.248/
-http://52.155.223.248/fibonacci/1
-```
+    ```
+    http://52.155.223.248/
+    http://52.155.223.248/fibonacci/1
+    ```
+   
   *  http://52.155.223.248/
-  ![](images/parte2-1.png)
+  
+     ![](images/parte2-1.png)
   
   * http://52.155.223.248/fibonacci/1
-  ![](images/parte2-2.png)
-
+  
+     ![](images/parte2-2.png)
+     
 
 2. Realice las pruebas de carga con `newman` que se realizaron en la parte 1 y haga un informe comparativo donde contraste: tiempos de respuesta, cantidad de peticiones respondidas con éxito, costos de las 2 infraestrucruras, es decir, la que desarrollamos con balanceo de carga horizontal y la que se hizo con una maquina virtual escalada.
+  
    ![](images/tabla2.png)
    
 3. Agregue una 4 maquina virtual y realice las pruebas de newman, pero esta vez no lance 2 peticiones en paralelo, sino que incrementelo a 4. Haga un informe donde presente el comportamiento de la CPU de las 4 VM y explique porque la tasa de éxito de las peticiones aumento con este estilo de escalabilidad.
 
-```
-newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
-newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
-newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
-newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
-```
+    ```
+    newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
+    newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
+    newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
+    newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
+    ```
+   
    * VM1
-   ![](images/cpuvm1.png)
+   
+     ![](images/cpuvm1.png)
    
    * VM2
-   ![](images/cpuvm2.png)
+    
+     ![](images/cpuvm2.png)
    
    * VM3
-   ![](images/cpuvm3.png)
+    
+     ![](images/cpuvm3.png)
    
    * VM4 
-   ![](images/cpuvm4.png)
+    
+     ![](images/cpuvm4.png)
    
 **Preguntas**
 
