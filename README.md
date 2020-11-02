@@ -205,7 +205,7 @@ por estas es bajo/medio.
 
 8. ¿Aumentar el tamaño de la VM es una buena solución en este escenario?, ¿Qué pasa con la FibonacciApp cuando cambiamos el tamaño de la VM?
 
-Aumentar el tamaño de la máquina puede significar un consumo menor de recursos de cpu, sin embargo, no se observa mejora en los tiempos de respuesta de las peticiones ni en la capacidad de respuesta concurrente del sistema (algunas peticiones aún fallan). Si se desea mejorar los tiempos de respuesta se debe realizar una mejor implementación de la aplicación FibonacciApp.
+   Aumentar el tamaño de la máquina puede significar un consumo menor de recursos de cpu, sin embargo, no se observa mejora en los tiempos de respuesta de las peticiones ni en la capacidad de respuesta concurrente del sistema (algunas peticiones aún fallan). Si se desea mejorar los tiempos de respuesta se debe realizar una mejor implementación de la aplicación FibonacciApp.
 
 Cuando cambiamos el tamaño de la máquina virtual es necesario reiniciarla, por lo tanto se pierde disponibilidad de la aplicación FibonacciApp ya que esta deja de funcionar mientras se reinicia.
 
@@ -303,7 +303,18 @@ newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALAN
 newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10 &
 newman run ARSW_LOAD-BALANCING_AZURE.postman_collection.json -e [ARSW_LOAD-BALANCING_AZURE].postman_environment.json -n 10
 ```
-
+   * VM1
+   ![](images/cpuvm1.png)
+   
+   * VM2
+   ![](images/cpuvm2.png)
+   
+   * VM3
+   ![](images/cpuvm3.png)
+   
+   * VM4 
+   ![](images/cpuvm4.png)
+   
 **Preguntas**
 
 * ¿Cuáles son los tipos de balanceadores de carga en Azure y en qué se diferencian?, ¿Qué es SKU, qué tipos hay y en qué se diferencian?, ¿Por qué el balanceador de carga necesita una IP pública?
