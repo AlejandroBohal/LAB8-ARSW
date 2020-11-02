@@ -414,11 +414,11 @@ Ahora vamos a crear 3 VMs (VM1, VM2 y VM3) con direcciones IP públicas standar 
 
 ## Referencias
 
-* !(https://docs.microsoft.com/en-us/azure/load-balancer/skus)
-* !(https://azure.microsoft.com/en-us/pricing/calculator/)
-* !(https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview)
-* !(https://azure.microsoft.com/en-us/blog/azure-load-balancer-new-distribution-mode/)
-* !(https://docs.microsoft.com/en-us/azure/virtual-network/network-security-groups overview#:~:text=You%20can%20use%20an%20Azure,several%20types%20of%20Azure%20resources.)
+* https://docs.microsoft.com/en-us/azure/load-balancer/skus
+* https://azure.microsoft.com/en-us/pricing/calculator/
+* https://docs.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview
+* https://azure.microsoft.com/en-us/blog/azure-load-balancer-new-distribution-mode/
+* https://docs.microsoft.com/en-us/azure/virtual-network/network-security-groups-overview#:~:text=You%20can%20use%20an%20Azure,several%20types%20of%20Azure%20resources
 
 
 
